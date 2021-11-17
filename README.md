@@ -1,1 +1,1 @@
-gitboor url: https://robot10235.github.io/plantdata/
+gitbook url: https://robot10235.github.io/plantdata/
