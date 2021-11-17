@@ -1,6 +1,6 @@
 --- 
 title: "Plants in US data analysis"
-author: "YOUR NAMES HERE"
+author: "Yuning Ding and Yan Gong"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
