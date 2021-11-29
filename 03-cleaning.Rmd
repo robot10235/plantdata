@@ -1,1 +1,43 @@
 # Data transformation
+
+Import necessary packages.
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(readr)
+```
+Import data
+```{r}
+data <- read.csv("usplant.csv", quote = "", sep = "\t", encoding = "UTF-8")
+```
+
+The data has some information about `taxonRank` which is higher than species. That is because the species data is missing.
+```{r}
+discard <- subset(data, is.na(speciesKey), select = c(family, genus, taxonRank, decimalLatitude, decimalLongitude))
+head(discard, 10)
+```
+
+We do not know this kind of information belongs to which specific species. And we know that the living area of different species in the same genus could be much different. For example, two data with same genus without species information has much different latitude and longitude.
+
+```{r}
+subset(discard, genus == 'Zygodon')
+```
+
+Therefore, we should use the information of `taxonRank` which is species or lower rank and drop the higher rank. Since all species have `speciesKey`, we can easily drop data with no `speciesKey`.
+```{r}
+species <- data %>%
+            filter(!is.na(speciesKey))
+```
+
+
+Check columns and choose informative ones.
+```{r}
+colnames(species)
+species <- species[c(10, 18, 20, 22, 23, 24, 25, 26, 27, 32, 33, 35)]
+colnames(species)
+```
+
+Save cleaning data
+```{r}
+write.table(species,"species.csv", row.names = FALSE, col.names = TRUE, sep = ",")
+```

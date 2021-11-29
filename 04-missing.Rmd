@@ -1,30 +1,59 @@
 # Missing values
 
+Import necessary packages.
 ```{r}
 library(ggplot2)
 library(tidyverse)
 library(patchwork)
 ```
 
-define a function which can be used to analyze our data
+Create a function which can be used to analyze our data.
 ```{r}
-visna <- function(df,type='counts') {
-  num_rows <- nrow(df)
-  num_cols <- ncol(df)
-
-  missing_patterns <- data.frame(is.na(df)) %>%
-    group_by_all() %>%
-    count(name = "count", sort = TRUE) %>%
-    ungroup()
-
-  if(type == 'percents') {
-    missing_patterns <- missing_patterns %>%
-      mutate(count = count / num_rows * 100)
-  }
-
+plot_missing <- function(data, percent = TRUE){
+  
+  # Find numbers of columns and rows of the dataset
+  num_rows <- nrow(data)
+  num_cols <- ncol(data)
+  
+  # Find and count the missing patterns
+  missing_patterns <- data.frame(is.na(data)) %>%
+  group_by_all() %>%
+  count(name = "count", sort = TRUE) %>%
+  ungroup()
+  
+  # Modify missing patterns based on the percent option
+  if (percent == TRUE){
   # Modify missing patterns to generate main graph
   missing_patterns_main <- missing_patterns %>%
-    mutate(id = row_number(),.before=1) %>%
+    mutate(id = row_number(), .before = 1) %>%
+    pivot_longer(cols = -c("id", "count"), 
+                 names_to = "variables", 
+                 values_to = "value") %>%
+    group_by(variables) %>%
+    mutate(var_count = 100 * sum(count[value == TRUE])/num_rows) %>%
+    ungroup() %>%
+    group_by(id) %>%
+    mutate(complete = as.character(ifelse(sum(value) == 0, 1, 0))) %>%
+    ungroup()
+  
+  # Modify missing patterns to generate top graph
+  missing_patterns_top <- missing_patterns_main %>%
+    group_by(variables) %>%
+    summarise(missing_rows = 100 * sum(count[value == TRUE])/num_rows) %>%
+    ungroup()
+  
+  # Modify missing patterns to generate right graph
+  missing_patterns_right <- missing_patterns %>%
+    mutate(id = row_number(), .before = 1) %>%
+    mutate(count = 100 * count/num_rows, 
+           complete = as.character(ifelse(rowSums(.[2:(num_cols + 1)]) == 0, 1, 0))) %>%
+    select(id, count, complete)
+  }
+  
+  else if (percent == FALSE){
+  # Modify missing patterns to generate main graph
+  missing_patterns_main <- missing_patterns %>%
+    mutate(id = row_number(), .before = 1) %>%
     pivot_longer(cols = -c("id", "count"), 
                  names_to = "variables", 
                  values_to = "value") %>%
@@ -34,83 +63,97 @@ visna <- function(df,type='counts') {
     group_by(id) %>%
     mutate(complete = as.character(ifelse(sum(value) == 0, 1, 0))) %>%
     ungroup()
-
-  # Set colors for main graph (not using defaults)
-  tile_colors <- c("grey", "mediumpurple1")
-
-  # Plot main graph
-  main_plot <- ggplot(missing_patterns_main, aes(x = reorder(variables, -var_count), 
-                                                 y = fct_rev(factor(id)), 
-                                                 fill = value, 
-                                                 alpha = complete)) + 
-               geom_tile(color = "white", show.legend = FALSE) + 
-               scale_fill_manual(values = tile_colors) + 
-               scale_alpha_manual(values = c("1" = 0.5, "0" = 1)) + 
-               labs(x = "variables", y = "missing pattern") + 
-               theme_bw() +
-               theme(legend.position = "none")
-
-  complete_case <- unique(missing_patterns_main$id[which(missing_patterns_main$complete==1)])
-  x <- as.integer(num_cols/2)+1
-  for (i in complete_case) {
-    y <- nrow(missing_patterns) - as.integer(i) + 1
-    main_plot <- main_plot + geom_text(aes(x, y, label='complete case'), size=4, family="Times New Roman")
-  }
-
+  
   # Modify missing patterns to generate top graph
   missing_patterns_top <- missing_patterns_main %>%
     group_by(variables) %>%
     summarise(missing_rows = sum(count[value == TRUE])) %>%
     ungroup()
+  
+  # Modify missing patterns to generate right graph
+  missing_patterns_right <- missing_patterns %>%
+    mutate(id = row_number(), .before = 1) %>%
+    mutate(complete = as.character(ifelse(rowSums(.[2:(num_cols + 1)]) == 0, 1, 0))) %>%
+    select(id, count, complete)
+  }
+  
+  else{
+    print("Wrong data input or inproper argument. Please try again. ")
+  }
 
+  # Set colors for main graph (not using defaults)
+  tile_colors <- c("grey60", "mediumorchid4")
+
+  # Plot main graph
+  main_plot <- ggplot(missing_patterns_main, 
+                      aes(x = reorder(variables, -var_count), 
+                          y = fct_rev(factor(id)), 
+                          fill = value, 
+                          alpha = complete)) + 
+          geom_tile(color = "white", show.legend = FALSE) + 
+          scale_fill_manual(values = tile_colors) + 
+          scale_alpha_manual(values = c("1" = 1, "0" = 0.5)) + 
+          labs(x = "variables", y = "missing pattern") + 
+          theme_bw() + 
+          theme(panel.grid.major = element_blank(),
+                panel.grid.minor = element_blank())
+  
   # Plot top graph
   top_plot <- ggplot(missing_patterns_top) + 
           geom_col(aes(x = reorder(variables, -missing_rows),
                        y = missing_rows), 
                    fill = "cornflowerblue") + 
-          labs(title = "Missing value patterns", x = "") + 
+          labs(title = "Missing value patterns", 
+               x = "") + 
           theme_bw() + 
           theme(panel.grid.major.x = element_blank(), 
-                panel.grid.minor.x = element_blank(),
-                legend.position = "none")
+                panel.grid.minor.x = element_blank())
   
-  if(type == "percents") {
-    top_plot <- top_plot +
-      scale_y_continuous(limits=c(0,100),breaks=seq(0,100,by=25)) +
-      labs(y = "% rows missing: ")
-  }
-  else {
+  # Add labels and title of top graph based on the percent option
+  if (percent == TRUE){
     top_plot <- top_plot + 
-      scale_y_continuous(breaks = c(0, 20, 10)) +
-      labs(y = "num rows missing: ")
+      scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, by = 25))+
+      ylab("% rows missing: ")
   }
-
-
-  # Modify missing patterns to generate right graph
-  missing_patterns_right <- missing_patterns_main %>%
-    select(id, count, complete)
-  missing_patterns_right <- unique(missing_patterns_right)
+  else{
+    top_plot <- top_plot + 
+      ylab("num rows missing: ")
+  }
 
   # Plot right graph
-  right_plot <- ggplot(missing_patterns_right,aes(x=count,y=factor(id),fill=complete))+
-    geom_col()+
-    scale_fill_manual(values=c('cornflowerblue','blue'))+
-    scale_y_discrete(limits=rev)+
-    ylab("") +
-    theme(panel.grid.major.y = element_blank(), 
-                panel.grid.minor.y = element_blank(),
+  right_plot <- ggplot(missing_patterns_right, 
+                       aes(x = count, 
+                           y = fct_rev(factor(id)), 
+                           fill = complete)) + 
+          geom_col() + 
+          scale_fill_manual(values = c("0" = "cornflowerblue", "1" = "blue")) + 
+          ylab("") + 
+          theme_bw() + 
+          theme(panel.grid.major.y = element_blank(), 
+                panel.grid.minor.y = element_blank(), 
                 legend.position = "none")
-
-  if(type == 'percents') {
+  
+  # Add labels and title of right graph based on the percent option
+  if (percent == TRUE){
     right_plot <- right_plot + 
-      scale_x_continuous(limits=c(0,100), breaks=seq(0,100,by=25)) +
+      scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, by = 25)) +
       xlab("% rows")
   }
-
-  else {
+  else{
     right_plot <- right_plot + 
-      xlab("num rows")  
+      xlab("row count")
   }
+  
+  # Find position to label complete cases
+  complete_cases <- unique(missing_patterns_main$id[which(missing_patterns_main$complete == "1")])
+  x = as.integer(ncol(data)/2) + 1
+  for (i in complete_cases){
+    y = nrow(missing_patterns) - as.integer(i) + 1
+    main_plot <- main_plot + 
+      geom_text(aes(x, y, label = "complete case"), 
+                size = 10, family = "Times New Roman", 
+                hjust = 0.6, show_guide = FALSE)
+}
 
   # Set layout for plots assembly
   layout <- c(area(1, 1, 1, 4), area(2, 1, 5, 4), area(2, 5, 5, 5))
@@ -120,22 +163,25 @@ visna <- function(df,type='counts') {
 }
 ```
 
-import data and purge it simply
+Load data
 ```{r}
-data <- read.csv("usplant.csv", quote = "", sep = "\t", encoding = "UTF-8")
-df <- data[c(10,18,22,23,26,27,28,29,31,32,33)]
-colnames(df) <- c('SP','ST','LA','LO','ELE','EA','DP','DPA','D','M','Y')
+df <- read.csv("species.csv", sep = ",", encoding = "UTF-8")
+```
+
+Shorten the column names so they don't overlap in the plot.
+```{r}
+df_colnames <- colnames(df)
+colnames(df) <- c('SP','ST','CNT','LA','LO','COUN','COPRE','ELE','ELEA','M','Y','SK')
 ```
 
 visualize the missing pattern
 ```{r}
-visna(df)
+plot_missing(df)
 ```
-Observing the plot, we can easily find out some correlations among some factors. LA means latitude and LO means longitude, so if one of them is missing, the other one must be missing too. The plot reveals this correlation. In addition, DPA means deep accuracy and DP means depth, if depth exists, depth accuracy has much probability to exist. The similar correlation also appears between EA(elevation accuracy) and ELE(elevation). Another correlation is among Y(year), M(month) and D(day). Year is more easily be recorded, rather than month and day.
 
-DA, DP, EA, ELE are more likely to be missing, because few plants need to be recorded these information. For example, we may need to record deep of marine plants. But we wouldn't record deep of terrestrial plants. And it is easier to record terrestrial plants and the amount of terrestrial plants is bigger. It is similar for elevation, since researchers may record the elevation when the plants are living in the mountains.
+Observing the plot, we can easily find out some correlations among some factors. LA means latitude and LO means longitude, so if one of them is missing, the other one must be missing too. The plot reveals this correlation. The similar correlation also appears between EA(elevation accuracy) and ELE(elevation). Another correlation is between Y(year) and M(month). Year is more easily be recorded than month.
 
-SP, ST, Y has no missing at all. That's because SP(species) is somehow a index for the data. ST(state) and Y(year) is much easier to record. 
+COPRE(coordinate precision), EA and ELE are more likely to be missing. COUN(coordinate uncertainty in meter) has no missing because we first downloaded data with limitation of COUN smaller than 10000. And SP(species), SK(species key) has no missing data because at chapter 3 we purge all missing species key data. ST(state), Y has no missing at all. ST(state) and Y(year) is much easier to record. 
 
 
 
