@@ -36,8 +36,17 @@ colnames(species)
 species <- species[c(10, 18, 20, 22, 23, 24, 25, 26, 27, 32, 33, 35)]
 colnames(species)
 ```
-
-Save cleaning data
+We also notice that some species only appear several times. We need to drop species appearing less than 50 times.
 ```{r}
-write.table(species,"species.csv", row.names = FALSE, col.names = TRUE, sep = ",")
+cnt <- species %>%
+        group_by(species) %>%
+        count(name = 'count', sort = TRUE)
+tail(cnt, 10)
+cnt <- subset(cnt, count >= 50)
+new_species <- subset(species, species %in% cnt$species)
+```
+
+Finally, save cleaning data.
+```{r}
+write.table(new_species,"species.csv", row.names = FALSE, col.names = TRUE, sep = ",")
 ```

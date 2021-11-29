@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Missing values | Plants in US data analysis</title>
-  <meta name="description" content="Chapter 4 Missing values | Plants in US data analysis" />
+  <title>Chapter 4 Missing values | US Plants in 50 years</title>
+  <meta name="description" content="Chapter 4 Missing values | US Plants in 50 years" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Missing values | Plants in US data analysis" />
+  <meta property="og:title" content="Chapter 4 Missing values | US Plants in 50 years" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Missing values | Plants in US data analysis" />
+  <meta name="twitter:title" content="Chapter 4 Missing values | US Plants in 50 years" />
   
   
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Yuning Ding and Yan Gong" />
 
 
-<meta name="date" content="2021-11-28" />
+<meta name="date" content="2021-11-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -91,7 +91,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Plants in US data analysis</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">US Plants in 50 years</a>
           </h1>
         </div>
 
@@ -101,14 +101,15 @@
             <section class="normal" id="section-">
 <div id="missing-values" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
-<p>Import necessary packages.</p>
-<p>Create a function which can be used to analyze our data.</p>
-<p>Load data</p>
-<p>Shorten the column names so they don’t overlap in the plot.</p>
-<p>visualize the missing pattern
-<img src="finalproj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Visualize the missing pattern of the data which we have purged before.
+<img src="finalproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>Observing the plot, we can easily find out some correlations among some factors. LA means latitude and LO means longitude, so if one of them is missing, the other one must be missing too. The plot reveals this correlation. The similar correlation also appears between EA(elevation accuracy) and ELE(elevation). Another correlation is between Y(year) and M(month). Year is more easily be recorded than month.</p>
 <p>COPRE(coordinate precision), EA and ELE are more likely to be missing. COUN(coordinate uncertainty in meter) has no missing because we first downloaded data with limitation of COUN smaller than 10000. And SP(species), SK(species key) has no missing data because at chapter 3 we purge all missing species key data. ST(state), Y has no missing at all. ST(state) and Y(year) is much easier to record.</p>
+<p>Although LA, LO and M have some missing values, these cases are actually very small. We can notice the top graph that it is not very obvious to show that these columns have missing values. As for the right graph, we can find that the missing pattern that these columns have are smallest subset in the whole data. Therefore, we can think these columns have no missing values.</p>
+<p>We still hope to use the changes of elevation of plants to draw more interesting conclusions, though much data lose it. We try to find that are there some species with elevation recorded for many years. We first observe the correlation between missing elevation and years. Although most of species do not have elevation each year, we can find that there might be few of them recorded for continuous years.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>In addition, we can plot the count of species have different missing elevation. We can observe that if we use the percent of missing elevation which is lower than 30, we could have nearly 100 species to draw some conclusions about elevation.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 
 </div>
             </section>

@@ -1,2 +1,3 @@
 # Data sources
 
+Since GBIF provides some simple selection to purge data. The data we chose whose plants are found in US and discover time is from 1971 to 2021. It has restriction that the basis of record must be human observation and the coordinate uncertainty in metres must be smaller than 10000, in order to help us conclude certain results. 

@@ -1,14 +1,14 @@
 # Missing values
 
-Import necessary packages.
 ```{r}
+# Import necessary packages.
 library(ggplot2)
 library(tidyverse)
 library(patchwork)
 ```
 
-Create a function which can be used to analyze our data.
 ```{r}
+# Create a function which can be used to analyze our data.
 plot_missing <- function(data, percent = TRUE){
   
   # Find numbers of columns and rows of the dataset
@@ -163,18 +163,19 @@ plot_missing <- function(data, percent = TRUE){
 }
 ```
 
-Load data
+
 ```{r}
+# Load data
 df <- read.csv("species.csv", sep = ",", encoding = "UTF-8")
 ```
 
-Shorten the column names so they don't overlap in the plot.
 ```{r}
+# Shorten the column names so they don't overlap in the plot.
 df_colnames <- colnames(df)
 colnames(df) <- c('SP','ST','CNT','LA','LO','COUN','COPRE','ELE','ELEA','M','Y','SK')
 ```
 
-visualize the missing pattern
+Visualize the missing pattern of the data which we have purged before.
 ```{r}
 plot_missing(df)
 ```
@@ -182,6 +183,61 @@ plot_missing(df)
 Observing the plot, we can easily find out some correlations among some factors. LA means latitude and LO means longitude, so if one of them is missing, the other one must be missing too. The plot reveals this correlation. The similar correlation also appears between EA(elevation accuracy) and ELE(elevation). Another correlation is between Y(year) and M(month). Year is more easily be recorded than month.
 
 COPRE(coordinate precision), EA and ELE are more likely to be missing. COUN(coordinate uncertainty in meter) has no missing because we first downloaded data with limitation of COUN smaller than 10000. And SP(species), SK(species key) has no missing data because at chapter 3 we purge all missing species key data. ST(state), Y has no missing at all. ST(state) and Y(year) is much easier to record. 
+
+Although LA, LO and M have some missing values, these cases are actually very small. We can notice the top graph that it is not very obvious to show that these columns have missing values. As for the right graph, we can find that the missing pattern that these columns have are smallest subset in the whole data. Therefore, we can think these columns have no missing values.
+
+We still hope to use the changes of elevation of plants to draw more interesting conclusions, though much data lose it. We try to find that are there some species with elevation recorded for many years. We first observe the correlation between missing elevation and years. Although most of species do not have elevation each year, we can find that there might be few of them recorded for continuous years.
+
+```{r}
+# analyze the correlation between missing elevation and years
+ele_year_na <- subset(df,select = c(ELE, Y)) 
+ele_year <- ele_year_na %>%
+              group_by(Y) %>%
+              count(name = "count")
+ele_year_na <- ele_year_na %>%
+                group_by(Y) %>%
+                count(name = "na_count", is.na(ELE))
+ele_year_na <- subset(ele_year_na, ele_year_na['is.na(ELE)'] == TRUE, select = c(Y, na_count))
+
+ele_pattern <- merge(ele_year_na, ele_year, by='Y')
+
+ele_pattern <- ele_pattern %>%
+                mutate(na_percent = na_count / count)
+```
+
+```{r}
+# plot
+ggplot(ele_pattern, aes(Y, na_percent)) +
+  geom_col(color = "blue", fill = "lightblue") +
+  ggtitle("Number of missing values of elevation by year") +
+  xlab("year")
+```
+
+In addition, we can plot the count of species have different missing elevation. We can observe that if we use the percent of missing elevation which is lower than 30, we could have nearly 100 species to draw some conclusions about elevation. 
+
+```{r}
+# analyze the correlation between missing elevation and species
+ele_sp_na <- subset(df,select = c(ELE, SK)) 
+ele_sp <- ele_sp_na %>%
+              group_by(SK) %>%
+              count(name = "count")
+ele_sp_na <- ele_sp_na %>%
+                group_by(SK) %>%
+                count(name = "na_count", is.na(ELE))
+ele_sp_na <- subset(ele_sp_na, ele_sp_na['is.na(ELE)'] == TRUE, select = c(SK, na_count))
+
+ele_pattern <- merge(ele_sp_na, ele_sp, by='SK')
+
+ele_pattern <- ele_pattern %>%
+                mutate(na_percent = na_count / count)
+```
+
+```{r}
+# plot
+ggplot(ele_pattern, aes(na_percent)) +
+  geom_histogram(color = "blue", fill = "lightblue", bins = 25) +
+  ggtitle("Number of missing values of elevation by species")
+```
 
 
 
