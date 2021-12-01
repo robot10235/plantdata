@@ -21,10 +21,10 @@
   
   
 
-<meta name="author" content="Yuning Ding and Yan Gong" />
+<meta name="author" content="Group 86: Yuning Ding and Yan Gong" />
 
 
-<meta name="date" content="2021-11-30" />
+<meta name="date" content="2021-12-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -101,8 +101,6 @@
             <section class="normal" id="section-">
 <div id="data-transformation" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
-<p>Import necessary packages.</p>
-<p>Import data</p>
 <p>The data has some information about <code>taxonRank</code> which is higher than species. That is because the species data is missing.</p>
 <pre><code>##              family        genus taxonRank decimalLatitude decimalLongitude
 ## 4         Hypnaceae       Hypnum     GENUS        44.31670        -104.6833
@@ -121,38 +119,14 @@
 ## 210403 Orthotrichaceae Zygodon     GENUS        20.76878        -156.2339</code></pre>
 <p>Therefore, we should use the information of <code>taxonRank</code> which is species or lower rank and drop the higher rank. Since all species have <code>speciesKey</code>, we can easily drop data with no <code>speciesKey</code>.</p>
 <p>Check columns and choose informative ones.</p>
-<pre><code>##  [1] &quot;gbifID&quot;                           &quot;datasetKey&quot;                      
-##  [3] &quot;occurrenceID&quot;                     &quot;kingdom&quot;                         
-##  [5] &quot;phylum&quot;                           &quot;class&quot;                           
-##  [7] &quot;order&quot;                            &quot;family&quot;                          
-##  [9] &quot;genus&quot;                            &quot;species&quot;                         
-## [11] &quot;infraspecificEpithet&quot;             &quot;taxonRank&quot;                       
-## [13] &quot;scientificName&quot;                   &quot;verbatimScientificName&quot;          
-## [15] &quot;verbatimScientificNameAuthorship&quot; &quot;countryCode&quot;                     
-## [17] &quot;locality&quot;                         &quot;stateProvince&quot;                   
-## [19] &quot;occurrenceStatus&quot;                 &quot;individualCount&quot;                 
-## [21] &quot;publishingOrgKey&quot;                 &quot;decimalLatitude&quot;                 
-## [23] &quot;decimalLongitude&quot;                 &quot;coordinateUncertaintyInMeters&quot;   
-## [25] &quot;coordinatePrecision&quot;              &quot;elevation&quot;                       
-## [27] &quot;elevationAccuracy&quot;                &quot;depth&quot;                           
-## [29] &quot;depthAccuracy&quot;                    &quot;eventDate&quot;                       
-## [31] &quot;day&quot;                              &quot;month&quot;                           
-## [33] &quot;year&quot;                             &quot;taxonKey&quot;                        
-## [35] &quot;speciesKey&quot;                       &quot;basisOfRecord&quot;                   
-## [37] &quot;institutionCode&quot;                  &quot;collectionCode&quot;                  
-## [39] &quot;catalogNumber&quot;                    &quot;recordNumber&quot;                    
-## [41] &quot;identifiedBy&quot;                     &quot;dateIdentified&quot;                  
-## [43] &quot;license&quot;                          &quot;rightsHolder&quot;                    
-## [45] &quot;recordedBy&quot;                       &quot;typeStatus&quot;                      
-## [47] &quot;establishmentMeans&quot;               &quot;lastInterpreted&quot;                 
-## [49] &quot;mediaType&quot;                        &quot;issue&quot;</code></pre>
 <pre><code>##  [1] &quot;species&quot;                       &quot;stateProvince&quot;                
 ##  [3] &quot;individualCount&quot;               &quot;decimalLatitude&quot;              
 ##  [5] &quot;decimalLongitude&quot;              &quot;coordinateUncertaintyInMeters&quot;
 ##  [7] &quot;coordinatePrecision&quot;           &quot;elevation&quot;                    
-##  [9] &quot;elevationAccuracy&quot;             &quot;month&quot;                        
-## [11] &quot;year&quot;                          &quot;speciesKey&quot;</code></pre>
-<p>We also notice that some species only appear several times. We need to drop species appearing less than 50 times.</p>
+##  [9] &quot;elevationAccuracy&quot;             &quot;depth&quot;                        
+## [11] &quot;depthAccuracy&quot;                 &quot;month&quot;                        
+## [13] &quot;year&quot;                          &quot;speciesKey&quot;</code></pre>
+<p>We also notice that some species only appear several times. We choose to drop species appearing less than 200 records.</p>
 <pre><code>## # A tibble: 10 x 2
 ## # Groups:   species [10]
 ##    species                 count
@@ -167,7 +141,57 @@
 ##  8 Ziziphus mauritiana         1
 ##  9 Zygodon tetragonostomus     1
 ## 10 Zygodon viridissimus        1</code></pre>
-<p>Finally, save cleaning data.</p>
+<p>Finally, we get 100 species to investigate.</p>
+<pre><code>##   [1] &quot;Miconia calvescens&quot;         &quot;Cortaderia jubata&quot;         
+##   [3] &quot;Coccinia grandis&quot;           &quot;Cenchrus setaceus&quot;         
+##   [5] &quot;Silybum marianum&quot;           &quot;Elymus virginicus&quot;         
+##   [7] &quot;Poa pratensis&quot;              &quot;Ulota megalospora&quot;         
+##   [9] &quot;Poa arctica&quot;                &quot;Achillea millefolium&quot;      
+##  [11] &quot;Celtis occidentalis&quot;        &quot;Crataegus chrysocarpa&quot;     
+##  [13] &quot;Panicum capillare&quot;          &quot;Deschampsia cespitosa&quot;     
+##  [15] &quot;Dicranum fuscescens&quot;        &quot;Equisetum arvense&quot;         
+##  [17] &quot;Ptilidium californicum&quot;     &quot;Poa glauca&quot;                
+##  [19] &quot;Apocynum cannabinum&quot;        &quot;Calamagrostis canadensis&quot;  
+##  [21] &quot;Stellaria longipes&quot;         &quot;Sporobolus compositus&quot;     
+##  [23] &quot;Elymus canadensis&quot;          &quot;Setaria viridis&quot;           
+##  [25] &quot;Salix arctica&quot;              &quot;Sporobolus cryptandrus&quot;    
+##  [27] &quot;Trisetum spicatum&quot;          &quot;Salix glauca&quot;              
+##  [29] &quot;Festuca rubra&quot;              &quot;Bromus tectorum&quot;           
+##  [31] &quot;Epilobium ciliatum&quot;         &quot;Artemisia ludoviciana&quot;     
+##  [33] &quot;Bassia scoparia&quot;            &quot;Carex aquatilis&quot;           
+##  [35] &quot;Cystopteris fragilis&quot;       &quot;Lithospermum incisum&quot;      
+##  [37] &quot;Persicaria amphibia&quot;        &quot;Elymus violaceus&quot;          
+##  [39] &quot;Salix pulchra&quot;              &quot;Luzula multiflora&quot;         
+##  [41] &quot;Solidago multiradiata&quot;      &quot;Pediomelum tenuiflorum&quot;    
+##  [43] &quot;Echinochloa muricata&quot;       &quot;Erigeron canadensis&quot;       
+##  [45] &quot;Verbena bracteata&quot;          &quot;Eragrostis pectinacea&quot;     
+##  [47] &quot;Populus deltoides&quot;          &quot;Convolvulus arvensis&quot;      
+##  [49] &quot;Micranthes nelsoniana&quot;      &quot;Hordeum jubatum&quot;           
+##  [51] &quot;Eriophorum angustifolium&quot;   &quot;Panicum virgatum&quot;          
+##  [53] &quot;Capsella bursa-pastoris&quot;    &quot;Petasites frigidus&quot;        
+##  [55] &quot;Scapania bolanderi&quot;         &quot;Descurainia sophia&quot;        
+##  [57] &quot;Bromus inermis&quot;             &quot;Carex bigelowii&quot;           
+##  [59] &quot;Rorippa palustris&quot;          &quot;Veronica peregrina&quot;        
+##  [61] &quot;Symphyotrichum lanceolatum&quot; &quot;Persicaria lapathifolia&quot;   
+##  [63] &quot;Physalis longifolia&quot;        &quot;Salix barclayi&quot;            
+##  [65] &quot;Lamium amplexicaule&quot;        &quot;Medicago lupulina&quot;         
+##  [67] &quot;Bromus japonicus&quot;           &quot;Melilotus officinalis&quot;     
+##  [69] &quot;Rubus arcticus&quot;             &quot;Salix interior&quot;            
+##  [71] &quot;Luzula parviflora&quot;          &quot;Aconitum delphiniifolium&quot;  
+##  [73] &quot;Cerastium beeringianum&quot;     &quot;Taraxacum officinale&quot;      
+##  [75] &quot;Dicranum scoparium&quot;         &quot;Polemonium acutiflorum&quot;    
+##  [77] &quot;Agrostis exarata&quot;           &quot;Delphinium carolinianum&quot;   
+##  [79] &quot;Epilobium hornemannii&quot;      &quot;Fraxinus pennsylvanica&quot;    
+##  [81] &quot;Schizachyrium scoparium&quot;    &quot;Amaranthus retroflexus&quot;    
+##  [83] &quot;Melilotus albus&quot;            &quot;Ambrosia psilostachya&quot;     
+##  [85] &quot;Antennaria rosea&quot;           &quot;Galium trifidum&quot;           
+##  [87] &quot;Helianthus annuus&quot;          &quot;Lycopus americanus&quot;        
+##  [89] &quot;Bouteloua curtipendula&quot;     &quot;Dryas octopetala&quot;          
+##  [91] &quot;Xanthisma spinulosum&quot;       &quot;Pyrola asarifolia&quot;         
+##  [93] &quot;Camelina microcarpa&quot;        &quot;Packera plattensis&quot;        
+##  [95] &quot;Panicum acuminatum&quot;         &quot;Spinulum annotinum&quot;        
+##  [97] &quot;Carex lyngbyei&quot;             &quot;Eragrostis cilianensis&quot;    
+##  [99] &quot;Rumex crispus&quot;              &quot;Porella navicularis&quot;</code></pre>
 
 </div>
             </section>

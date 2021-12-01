@@ -1,13 +1,18 @@
 --- 
 title: "US Plants in 50 years"
-author: "Yuning Ding and Yan Gong"
+author: "Group 86: Yuning Ding and Yan Gong"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
 
 # Introduction
 
+Global warming has been one of the hottest topic for many years. When we talk about global warming, we will imagine the glacier melts in the polar region and high mountains, sea level rises making some islands sink, and summer becomes hotter than past years. Global warming not only changes human life, but also impacts all living things around the world. Through this opportunity, we analyze the occurrences of plants in the last 50 years in US, hoping to find out some changes happened. For example, latitude and elevation of plants may change since plants may live in higher latitude or higher elevation area mainly as years pass because of global warming.
 
+In addition, in the data of occurrences of plants in the last 50 years in US we find that Miconia calvescens has the maximum records. Miconia calvescens is a species of flowering plant in the family Melastomataceae. It is native to Mexico and Central and South America and it has become one of the world's most invasive species. In Hawaii, it is commonly referred to as the "purple plague", and threatens to destroy entire ecosystems. The Invasive Species Specialist Group list the tree as one of the world's 100 most invasive species in the Global Invasive Species Database. We are interested in its spread in US.
 
-We use biodiversity data of plants from 1971 to 2021 in US on GBIF(Global Biodiversity Information Facility) to discover changes in the last 50 years. 
-hello world
+In this project, we collect the plant data with restrictions of coordinate uncertainty in metres in US in the last 50 years in GBIF(Global Biodiversity Information Facility). The download link is: https://doi.org/10.15468/dl.kym9t4. We would like to carry out analysis from both geographic and time series perspectives and answer the following questions:
+
+1. Does latitude of plants in US change in the last 50 years?
+2. What are the areas Miconia calvescens lives at present?
+3. Are living conditions of these areas different?

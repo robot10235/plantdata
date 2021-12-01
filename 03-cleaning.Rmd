@@ -1,13 +1,14 @@
 # Data transformation
 
-Import necessary packages.
 ```{r}
+# Import necessary packages.
 library(ggplot2)
 library(tidyverse)
 library(readr)
 ```
-Import data
+
 ```{r}
+# Import data
 data <- read.csv("usplant.csv", quote = "", sep = "\t", encoding = "UTF-8")
 ```
 
@@ -32,21 +33,21 @@ species <- data %>%
 
 Check columns and choose informative ones.
 ```{r}
-colnames(species)
-species <- species[c(10, 18, 20, 22, 23, 24, 25, 26, 27, 32, 33, 35)]
+species <- species[c(10, 18, 20, 22, 23, 24, 25, 26, 27, 28, 29, 32, 33, 35)]
 colnames(species)
 ```
-We also notice that some species only appear several times. We need to drop species appearing less than 50 times.
+We also notice that some species only appear several times. We choose to drop species appearing less than 200 records.
 ```{r}
 cnt <- species %>%
         group_by(species) %>%
         count(name = 'count', sort = TRUE)
 tail(cnt, 10)
-cnt <- subset(cnt, count >= 50)
+cnt <- subset(cnt, count >= 200)
 new_species <- subset(species, species %in% cnt$species)
 ```
 
-Finally, save cleaning data.
+Finally, we get 100 species to investigate.
 ```{r}
+cnt$species
 write.table(new_species,"species.csv", row.names = FALSE, col.names = TRUE, sep = ",")
 ```

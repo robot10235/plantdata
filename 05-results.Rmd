@@ -1,1 +1,9 @@
 # Results
+
+```{r}
+test <- subset(df, SP == 'Miconia calvescens', select = c('SP','LA','ELE','Y'))
+test2 <- aggregate(test$LA, list(test$Y), FUN=mean)
+ggplot(test2, aes(Group.1, x)) +
+  geom_point() +
+  stat_smooth(method = lm, se = FALSE)
+```
