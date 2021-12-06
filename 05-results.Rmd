@@ -1,9 +1,151 @@
 # Results
+## The correlation between latitude and year.
+```{r}
+library(ggplot2)
+library(tidyverse)
+```
 
 ```{r}
-test <- subset(df, SP == 'Miconia calvescens', select = c('SP','LA','ELE','Y'))
-test2 <- aggregate(test$LA, list(test$Y), FUN=mean)
-ggplot(test2, aes(Group.1, x)) +
-  geom_point() +
-  stat_smooth(method = lm, se = FALSE)
+# load data
+df <- read.csv("species.csv", sep = ",", encoding = "UTF-8")
+colnames(df) <- c('SP','ST','CNT','LA','LO','COUN','COPRE','ELE','ELEA','DP','DPA','M','Y','SK')
 ```
+
+In order to find out the correlation between latitude and year, we need to purge some data whose latitude and year may not be relative. For instance, this is one of species called Utricularia dichotoma, the scatter plot of its latitude and year seems messy. It is hard to describe the correlation between them. The reason why it happens is probably wrong records or the characteristic of plants. For example, Utricularia dichotoma usually grows in wet locations and the moisture must be more important than temperature to the living of the species causing the mess of the scatter plot.  
+```{r}
+la_sp <- subset(df, SP == "Utricularia dichotoma", select = c('SP','LA','Y'))
+la_sp <- aggregate(la_sp$LA, list(la_sp$Y), FUN=mean)
+cor.test(la_sp$Group.1, la_sp$x, method = "spearman")$estimate
+ggplot(la_sp, aes(Group.1, x)) +
+  geom_point() + 
+  geom_smooth(method = "lm") +
+  ylab("average latitude") +
+  xlab("year") +
+  ggtitle("Utricularia dichotoma: latitude ~ year")
+```
+
+We calculate the correlation coefficient of latitude and year of each species, and choose its absolute value which is not less than 0.3. There are 19 species met the condition. Here are the species, correlation coefficient and slope.
+```{r}
+# 
+sp_names <- unique(df$SP)
+sp_use <- NULL
+corr_list <- NULL
+slope <- NULL
+
+all_sp_use <- NULL
+all_corr_list <- NULL
+
+for (sp in sp_names) {
+  la_sp <- subset(df, SP == sp, select = c('SP','LA','Y'))
+  la_sp <- aggregate(la_sp$LA, list(la_sp$Y), FUN = mean)
+  corr <- cor.test(la_sp$Group.1, la_sp$x, method = "pearson")$estimate
+  if (abs(corr) >= 0.3) {
+    sp_use <- append(sp_use, sp)
+    corr_list <- append(corr_list, corr)
+    slope <- append(slope, lm(la_sp$x ~ la_sp$Group.1)[[1]][[2]])
+  }
+  all_sp_use <- append(all_sp_use, sp)
+  all_corr_list <- append(all_corr_list, corr)
+}
+la_y_corr <- data.frame('species' = sp_use, 'corr' = corr_list, 'slope' = slope)
+all_la_y_corr <- data.frame('species' = all_sp_use, 'corr' = all_corr_list)
+la_y_corr
+```
+
+Observing the table, we can find that there are 3 species have positive correlation coefficients and 16 species have negative ones. It is worth noting that all latitudes are smaller than 0 since Australia is located in the southern hemisphere. Therefore, the negative correlation means the latitude gets higher as years pass. We show the correlation between latitude and years among 63 species as follows. The result is that about 70% of the species have no correlation between latitude and year. Nearly 24% of the species have negative correlations and 6% of the species have positive ones.
+
+```{r}
+positive_species <- subset(la_y_corr, slope > 0, select = c(species, corr))
+negative_species <- subset(la_y_corr, slope < 0, select = c(species, corr))
+relation <- c('positive', 'negative', 'norelation')
+count <- c(nrow(positive_species), 
+           nrow(negative_species), 
+           length(sp_names) - nrow(negative_species) - nrow(positive_species))
+
+pie <- data.frame('relation'= relation, 'count' = count)
+mylabel <- as.vector(pie$relation)
+mylabel <- paste(mylabel, "(", round(pie$count / sum(pie$count) * 100, 2), "%) ", sep = "") 
+
+ggplot(pie, aes(x = "", y = count, fill = relation)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +
+  ggtitle("Correlation Between Latitude and Year") +
+  labs(x = "", y = "") +
+  scale_fill_discrete(breaks = pie$relation, labels = mylabel)
+```
+
+We are also interested in different correlations in different class: Liliopsida and Magnoliopsida. We can see that the latitudes of Magnoliosida plants are more likely get higher. And Liliopsida plants do not have any correlation between latitudes and years.
+```{r}
+test2 <- unique(subset(data, species %in% all_sp_use, select = c(class, species)))
+test2 <- subset(left_join(test2, all_la_y_corr, by="species"), class != "Pinopsida")
+
+ggplot(test2, aes(corr, reorder(class, -corr, median))) +
+  geom_boxplot() +
+  ylab("class") +
+  xlab("correlation") +
+  ggtitle("Correlation Between Latitude and Year in Different Class")
+```
+
+## The correlation between elevation and year.
+
+We do the same thing to analyze the correlation between elevation and year. The result is that about 62% of the species have no correlation. Around 25% of the species have positive correlations and 12.7% of the species have negative ones.
+```{r}
+sp_names <- unique(df$SP)
+sp_use <- NULL
+corr_list <- NULL
+slope <- NULL
+
+all_sp_use <- NULL
+all_corr_list <- NULL
+
+for (sp in sp_names) {
+  ele_sp <- subset(df, SP == sp, select = c('SP','ELE','Y'))
+  ele_sp <- ele_sp %>%
+            filter(!is.na(ELE))
+  ele_sp <- aggregate(ele_sp$ELE, list(ele_sp$Y), FUN = mean)
+  corr <- cor.test(ele_sp$Group.1, ele_sp$x, method = "pearson")$estimate
+  if (abs(corr) >= 0.3) {
+    sp_use <- append(sp_use, sp)
+    corr_list <- append(corr_list, corr)
+    slope <- append(slope, lm(ele_sp$x ~ ele_sp$Group.1)[[1]][[2]])
+  }
+  all_sp_use <- append(all_sp_use, sp)
+  all_corr_list <- append(all_corr_list, corr)  
+}
+ele_y_corr <- data.frame('species' = sp_use, 'corr' = corr_list, 'slope' = slope)
+all_ele_y_corr <- data.frame('species' = all_sp_use, 'corr' = all_corr_list)
+
+positive_species <- subset(ele_y_corr, slope > 0, select = c(species, corr))
+negative_species <- subset(ele_y_corr, slope < 0, select = c(species, corr))
+relation <- c('positive', 'negative', 'norelation')
+count <- c(nrow(positive_species), 
+           nrow(negative_species), 
+           length(sp_names) - nrow(negative_species) - nrow(positive_species))
+
+pie <- data.frame('relation'= relation, 'count' = count)
+mylabel <- as.vector(pie$relation)
+mylabel <- paste(mylabel, "(", round(pie$count / sum(pie$count) * 100, 2), "%) ", sep = "") 
+
+ggplot(pie, aes(x = "", y = count, fill = relation)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +
+  ggtitle("Correlation Between Elevation and Year") +
+  labs(x = "", y = "") +
+  scale_fill_discrete(breaks = pie$relation, labels = mylabel)
+```
+
+Different correlations in different class are also presented as follows. The elevations of Liliopsida plants are more likely get higher as years pass. The Magnoliopsida are less likely to have such coorelations.
+```{r}
+test2 <- unique(subset(data, species %in% all_sp_use, select = c(class, species)))
+test2 <- subset(left_join(test2, all_ele_y_corr, by="species"), class != "Pinopsida")
+
+ggplot(test2, aes(corr, reorder(class, -corr, median))) +
+  geom_boxplot() +
+  ylab("class") +
+  xlab("correlation") +
+  ggtitle("Correlation Between Elevation and Year in Different Class")
+```
+
+Result:
+1.
+2.

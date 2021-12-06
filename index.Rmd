@@ -1,5 +1,5 @@
 --- 
-title: "US Plants in 50 years"
+title: "Popular Plants Used for Research Changes in Australia in 50 Years"
 author: "Group 86: Yuning Ding and Yan Gong"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -7,12 +7,10 @@ site: bookdown::bookdown_site
 
 # Introduction
 
-Global warming has been one of the hottest topic for many years. When we talk about global warming, we will imagine the glacier melts in the polar region and high mountains, sea level rises making some islands sink, and summer becomes hotter than past years. Global warming not only changes human life, but also impacts all living things around the world. Through this opportunity, we analyze the occurrences of plants in the last 50 years in US, hoping to find out some changes happened. For example, latitude and elevation of plants may change since plants may live in higher latitude or higher elevation area mainly as years pass because of global warming.
+Global warming has been one of the hottest topic for many years. When we talk about global warming, we will imagine the glacier melts in the polar region and high mountains, sea level rises making some islands sink, and summer becomes hotter than past years. Global warming not only changes human life, but also impacts all living things around the world. For example, the area of occurrences of plants may change since plants may live in higher latitude or higher elevation area as years pass because of rise of average temperature caused by global warming. In order to find out these changes, the data of all native plants in Australia should be needed. However, we can not collect complete data due to the limited conditions. We choose the data which is used for research to draw the conclusions. The result we are going to show can not represent for all plant species in Australia, but it does show some changes happens to the plants somehow. 
 
-In addition, in the data of occurrences of plants in the last 50 years in US we find that Miconia calvescens has the maximum records. Miconia calvescens is a species of flowering plant in the family Melastomataceae. It is native to Mexico and Central and South America and it has become one of the world's most invasive species. In Hawaii, it is commonly referred to as the "purple plague", and threatens to destroy entire ecosystems. The Invasive Species Specialist Group list the tree as one of the world's 100 most invasive species in the Global Invasive Species Database. We are interested in its spread in US.
+In this project, we analyze the occurrences of plants with lots of records with restrictions of coordinate uncertainty in metres in Australia in GBIF(Global Biodiversity Information Facility). The download link is: https://doi.org/10.15468/dl.knbx8a. We would like to carry out analysis from both geographic and time series perspectives and answer the following questions:
 
-In this project, we collect the plant data with restrictions of coordinate uncertainty in metres in US in the last 50 years in GBIF(Global Biodiversity Information Facility). The download link is: https://doi.org/10.15468/dl.kym9t4. We would like to carry out analysis from both geographic and time series perspectives and answer the following questions:
-
-1. Does latitude of plants in US change in the last 50 years?
-2. What are the areas Miconia calvescens lives at present?
-3. Are living conditions of these areas different?
+1. What is the relationship between latitudes of occurrence areas of plants and years?
+2. What do these plants have in common?
+3. Where have they lived these years?

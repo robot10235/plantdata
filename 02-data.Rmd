@@ -1,6 +1,6 @@
 # Data sources
 
-Since GBIF provides some simple selection to purge data. The data we chose whose plants are found in US and discover time is from 1971 to 2021. It has restrictions that the basis of record must be human observation and the coordinate uncertainty in metres must be smaller than 10000, in order to help us draw more accurate results.
+Since GBIF provides some simple selection to purge data. The data we chose which contains Australia native plants. It has restrictions that the coordinate uncertainty in metres must be smaller than 10000, in order to help us draw more accurate results.
 
 Some columns explanations as follows.
 

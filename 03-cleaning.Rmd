@@ -9,7 +9,7 @@ library(readr)
 
 ```{r}
 # Import data
-data <- read.csv("usplant.csv", quote = "", sep = "\t", encoding = "UTF-8")
+data <- read.csv("auplant.csv", quote = "", sep = "\t", encoding = "UTF-8")
 ```
 
 The data has some information about `taxonRank` which is higher than species. That is because the species data is missing.
@@ -21,33 +21,41 @@ head(discard, 10)
 We do not know this kind of information belongs to which specific species. And we know that the living area of different species in the same genus could be much different. For example, two data with same genus without species information has much different latitude and longitude.
 
 ```{r}
-subset(discard, genus == 'Zygodon')
+subset(discard, genus == 'Daphnandra')
 ```
 
 Therefore, we should use the information of `taxonRank` which is species or lower rank and drop the higher rank. Since all species have `speciesKey`, we can easily drop data with no `speciesKey`.
 ```{r}
-species <- data %>%
-            filter(!is.na(speciesKey))
+species <- data %>% 
+            filter(!is.na(speciesKey) & year > 1971)
 ```
-
 
 Check columns and choose informative ones.
 ```{r}
 species <- species[c(10, 18, 20, 22, 23, 24, 25, 26, 27, 28, 29, 32, 33, 35)]
 colnames(species)
 ```
-We also notice that some species only appear several times. We choose to drop species appearing less than 200 records.
+
+We also notice that some species only appear several times. We choose to drop species appearing less than 300 records which represent that they are popular in the research.
 ```{r}
 cnt <- species %>%
         group_by(species) %>%
         count(name = 'count', sort = TRUE)
 tail(cnt, 10)
-cnt <- subset(cnt, count >= 200)
+cnt <- subset(cnt, count >= 300)
 new_species <- subset(species, species %in% cnt$species)
 ```
 
-Finally, we get 100 species to investigate.
+Finally, we get 64 species to investigate. Most of them are in Magnoliopsida class.
 ```{r}
 cnt$species
 write.table(new_species,"species.csv", row.names = FALSE, col.names = TRUE, sep = ",")
+group <- unique(subset(data, species %in% cnt$species, select = c(phylum, class, order, family, genus, species)))
+pie1 <- group %>%
+        group_by(class) %>%
+        count(name = 'count', sort = TRUE)
+ggplot(pie1, aes(x = "", y = count, fill = class)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +
+  ggtitle("The class of the chosen 64 species")
 ```

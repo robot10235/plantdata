@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Data transformation | US Plants in 50 years</title>
-  <meta name="description" content="Chapter 3 Data transformation | US Plants in 50 years" />
+  <title>Chapter 3 Data transformation | Popular Plants Used for Research Changes in Australia in 50 Years</title>
+  <meta name="description" content="Chapter 3 Data transformation | Popular Plants Used for Research Changes in Australia in 50 Years" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Data transformation | US Plants in 50 years" />
+  <meta property="og:title" content="Chapter 3 Data transformation | Popular Plants Used for Research Changes in Australia in 50 Years" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Data transformation | US Plants in 50 years" />
+  <meta name="twitter:title" content="Chapter 3 Data transformation | Popular Plants Used for Research Changes in Australia in 50 Years" />
   
   
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Group 86: Yuning Ding and Yan Gong" />
 
 
-<meta name="date" content="2021-12-01" />
+<meta name="date" content="2021-12-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -77,7 +77,11 @@
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#the-correlation-between-latitude-and-year."><i class="fa fa-check"></i><b>5.1</b> The correlation between latitude and year.</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#the-correlation-between-elevation-and-year."><i class="fa fa-check"></i><b>5.2</b> The correlation between elevation and year.</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -91,7 +95,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">US Plants in 50 years</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Popular Plants Used for Research Changes in Australia in 50 Years</a>
           </h1>
         </div>
 
@@ -103,20 +107,20 @@
 <h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
 <p>The data has some information about <code>taxonRank</code> which is higher than species. That is because the species data is missing.</p>
 <pre><code>##              family        genus taxonRank decimalLatitude decimalLongitude
-## 4         Hypnaceae       Hypnum     GENUS        44.31670        -104.6833
-## 5   Orthotrichaceae Orthotrichum     GENUS        45.53330        -109.8167
-## 6        Isoetaceae      Isoetes     GENUS        34.30690         -80.9853
-## 7          Bryaceae  Rosulabryum     GENUS        39.45000        -122.7500
-## 8       Sphagnaceae     Sphagnum     GENUS        45.53330         -84.6667
-## 9                                    ORDER        31.59056        -110.5067
-## 10      Sphagnaceae     Sphagnum     GENUS        39.41670         -79.0667
-## 11         Mniaceae                 FAMILY        41.81342        -124.0647
-## 14     Haloragaceae Myriophyllum     GENUS        38.52333        -121.7861
-## 15 Rhabdoweisiaceae    Amphidium     GENUS        38.91419        -123.2563</code></pre>
+## 17        Rubiaceae   Psychotria     GENUS       -16.47347         145.3261
+## 31      Dicranaceae   Leucobryum     GENUS       -15.89014         145.2428
+## 57  Caulacanthaceae    Catenella     GENUS       -26.80674         153.1427
+## 80        Ericaceae    Styphelia     GENUS       -10.15684         142.1761
+## 82        Malvaceae     Seringia     GENUS       -19.00679         146.0928
+## 95    Campanulaceae      Isotoma     GENUS       -12.04167         142.5583
+## 96     Dilleniaceae    Hibbertia     GENUS       -28.84008         151.9761
+## 104       Lamiaceae Prostanthera     GENUS       -25.30978         151.4366
+## 129       Ericaceae   Leucopogon     GENUS       -28.24778         153.1381
+## 148         Poaceae     Eriachne     GENUS       -20.69278         145.2361</code></pre>
 <p>We do not know this kind of information belongs to which specific species. And we know that the living area of different species in the same genus could be much different. For example, two data with same genus without species information has much different latitude and longitude.</p>
-<pre><code>##                 family   genus taxonRank decimalLatitude decimalLongitude
-## 23     Orthotrichaceae Zygodon     GENUS        41.80417        -124.0604
-## 210403 Orthotrichaceae Zygodon     GENUS        20.76878        -156.2339</code></pre>
+<pre><code>##                    family      genus taxonRank decimalLatitude decimalLongitude
+## 315074 Atherospermataceae Daphnandra     GENUS          -17.37           145.72
+## 348821 Atherospermataceae Daphnandra     GENUS          -31.45           151.17</code></pre>
 <p>Therefore, we should use the information of <code>taxonRank</code> which is species or lower rank and drop the higher rank. Since all species have <code>speciesKey</code>, we can easily drop data with no <code>speciesKey</code>.</p>
 <p>Check columns and choose informative ones.</p>
 <pre><code>##  [1] &quot;species&quot;                       &quot;stateProvince&quot;                
@@ -126,72 +130,55 @@
 ##  [9] &quot;elevationAccuracy&quot;             &quot;depth&quot;                        
 ## [11] &quot;depthAccuracy&quot;                 &quot;month&quot;                        
 ## [13] &quot;year&quot;                          &quot;speciesKey&quot;</code></pre>
-<p>We also notice that some species only appear several times. We choose to drop species appearing less than 200 records.</p>
+<p>We also notice that some species only appear several times. We choose to drop species appearing less than 300 records which represent that they are popular in the research.</p>
 <pre><code>## # A tibble: 10 x 2
 ## # Groups:   species [10]
 ##    species                 count
 ##    &lt;chr&gt;                   &lt;int&gt;
-##  1 Yucca arkansana             1
-##  2 Yucca madrensis             1
-##  3 Yucca reverchonii           1
-##  4 Zanthoxylum fagara          1
-##  5 Zenobia pulverulenta        1
-##  6 Zigadenus glaberrimus       1
-##  7 Zizia trifoliata            1
-##  8 Ziziphus mauritiana         1
-##  9 Zygodon tetragonostomus     1
-## 10 Zygodon viridissimus        1</code></pre>
-<p>Finally, we get 100 species to investigate.</p>
-<pre><code>##   [1] &quot;Miconia calvescens&quot;         &quot;Cortaderia jubata&quot;         
-##   [3] &quot;Coccinia grandis&quot;           &quot;Cenchrus setaceus&quot;         
-##   [5] &quot;Silybum marianum&quot;           &quot;Elymus virginicus&quot;         
-##   [7] &quot;Poa pratensis&quot;              &quot;Ulota megalospora&quot;         
-##   [9] &quot;Poa arctica&quot;                &quot;Achillea millefolium&quot;      
-##  [11] &quot;Celtis occidentalis&quot;        &quot;Crataegus chrysocarpa&quot;     
-##  [13] &quot;Panicum capillare&quot;          &quot;Deschampsia cespitosa&quot;     
-##  [15] &quot;Dicranum fuscescens&quot;        &quot;Equisetum arvense&quot;         
-##  [17] &quot;Ptilidium californicum&quot;     &quot;Poa glauca&quot;                
-##  [19] &quot;Apocynum cannabinum&quot;        &quot;Calamagrostis canadensis&quot;  
-##  [21] &quot;Stellaria longipes&quot;         &quot;Sporobolus compositus&quot;     
-##  [23] &quot;Elymus canadensis&quot;          &quot;Setaria viridis&quot;           
-##  [25] &quot;Salix arctica&quot;              &quot;Sporobolus cryptandrus&quot;    
-##  [27] &quot;Trisetum spicatum&quot;          &quot;Salix glauca&quot;              
-##  [29] &quot;Festuca rubra&quot;              &quot;Bromus tectorum&quot;           
-##  [31] &quot;Epilobium ciliatum&quot;         &quot;Artemisia ludoviciana&quot;     
-##  [33] &quot;Bassia scoparia&quot;            &quot;Carex aquatilis&quot;           
-##  [35] &quot;Cystopteris fragilis&quot;       &quot;Lithospermum incisum&quot;      
-##  [37] &quot;Persicaria amphibia&quot;        &quot;Elymus violaceus&quot;          
-##  [39] &quot;Salix pulchra&quot;              &quot;Luzula multiflora&quot;         
-##  [41] &quot;Solidago multiradiata&quot;      &quot;Pediomelum tenuiflorum&quot;    
-##  [43] &quot;Echinochloa muricata&quot;       &quot;Erigeron canadensis&quot;       
-##  [45] &quot;Verbena bracteata&quot;          &quot;Eragrostis pectinacea&quot;     
-##  [47] &quot;Populus deltoides&quot;          &quot;Convolvulus arvensis&quot;      
-##  [49] &quot;Micranthes nelsoniana&quot;      &quot;Hordeum jubatum&quot;           
-##  [51] &quot;Eriophorum angustifolium&quot;   &quot;Panicum virgatum&quot;          
-##  [53] &quot;Capsella bursa-pastoris&quot;    &quot;Petasites frigidus&quot;        
-##  [55] &quot;Scapania bolanderi&quot;         &quot;Descurainia sophia&quot;        
-##  [57] &quot;Bromus inermis&quot;             &quot;Carex bigelowii&quot;           
-##  [59] &quot;Rorippa palustris&quot;          &quot;Veronica peregrina&quot;        
-##  [61] &quot;Symphyotrichum lanceolatum&quot; &quot;Persicaria lapathifolia&quot;   
-##  [63] &quot;Physalis longifolia&quot;        &quot;Salix barclayi&quot;            
-##  [65] &quot;Lamium amplexicaule&quot;        &quot;Medicago lupulina&quot;         
-##  [67] &quot;Bromus japonicus&quot;           &quot;Melilotus officinalis&quot;     
-##  [69] &quot;Rubus arcticus&quot;             &quot;Salix interior&quot;            
-##  [71] &quot;Luzula parviflora&quot;          &quot;Aconitum delphiniifolium&quot;  
-##  [73] &quot;Cerastium beeringianum&quot;     &quot;Taraxacum officinale&quot;      
-##  [75] &quot;Dicranum scoparium&quot;         &quot;Polemonium acutiflorum&quot;    
-##  [77] &quot;Agrostis exarata&quot;           &quot;Delphinium carolinianum&quot;   
-##  [79] &quot;Epilobium hornemannii&quot;      &quot;Fraxinus pennsylvanica&quot;    
-##  [81] &quot;Schizachyrium scoparium&quot;    &quot;Amaranthus retroflexus&quot;    
-##  [83] &quot;Melilotus albus&quot;            &quot;Ambrosia psilostachya&quot;     
-##  [85] &quot;Antennaria rosea&quot;           &quot;Galium trifidum&quot;           
-##  [87] &quot;Helianthus annuus&quot;          &quot;Lycopus americanus&quot;        
-##  [89] &quot;Bouteloua curtipendula&quot;     &quot;Dryas octopetala&quot;          
-##  [91] &quot;Xanthisma spinulosum&quot;       &quot;Pyrola asarifolia&quot;         
-##  [93] &quot;Camelina microcarpa&quot;        &quot;Packera plattensis&quot;        
-##  [95] &quot;Panicum acuminatum&quot;         &quot;Spinulum annotinum&quot;        
-##  [97] &quot;Carex lyngbyei&quot;             &quot;Eragrostis cilianensis&quot;    
-##  [99] &quot;Rumex crispus&quot;              &quot;Porella navicularis&quot;</code></pre>
+##  1 Xylocarpus rumphii          1
+##  2 Xylosma parvifolium         1
+##  3 Yamazakia pusilla           1
+##  4 Zantedeschia aethiopica     1
+##  5 Ziziphus jujuba             1
+##  6 Zornia disticha             1
+##  7 Zornia latifolia            1
+##  8 Zostera mucronata           1
+##  9 Zygnema cruciatum           1
+## 10 Zygnema peliosporum         1</code></pre>
+<p>Finally, we get 64 species to investigate. Most of them are in Magnoliopsida class.</p>
+<pre><code>##  [1] &quot;Pittosporum undulatum&quot;       &quot;Acacia longifolia&quot;          
+##  [3] &quot;Melaleuca ericifolia&quot;        &quot;Leptospermum laevigatum&quot;    
+##  [5] &quot;Eucalyptus leucoxylon&quot;       &quot;Euphorbia drummondii&quot;       
+##  [7] &quot;Acacia sophorae&quot;             &quot;Eucalyptus globulus&quot;        
+##  [9] &quot;Chenopodium spinescens&quot;      &quot;Kennedia rubicunda&quot;         
+## [11] &quot;Melaleuca armillaris&quot;        &quot;Syzygium smithii&quot;           
+## [13] &quot;Eucalyptus botryoides&quot;       &quot;Themeda triandra&quot;           
+## [15] &quot;Dysphania pumilio&quot;           &quot;Myoporum insulare&quot;          
+## [17] &quot;Dodonaea procumbens&quot;         &quot;Dodonaea viscosa&quot;           
+## [19] &quot;Chenopodium parabolicum&quot;     &quot;Melaleuca decussata&quot;        
+## [21] &quot;Callitris rhomboidea&quot;        &quot;Imperata cylindrica&quot;        
+## [23] &quot;Setaria jubiflora&quot;           &quot;Eucalyptus crebra&quot;          
+## [25] &quot;Pultenaea juniperina&quot;        &quot;Acacia pravissima&quot;          
+## [27] &quot;Fimbristylis dichotoma&quot;      &quot;Acacia provincialis&quot;        
+## [29] &quot;Acacia floribunda&quot;           &quot;Grevillea rosmarinifolia&quot;   
+## [31] &quot;Acacia retinodes&quot;            &quot;Acacia stenophylla&quot;         
+## [33] &quot;Eclipta platyglossa&quot;         &quot;Dichanthium sericeum&quot;       
+## [35] &quot;Senna artemisioides&quot;         &quot;Brachychiton populneus&quot;     
+## [37] &quot;Cyperus difformis&quot;           &quot;Maireana sclerolaenoides&quot;   
+## [39] &quot;Callitris endlicheri&quot;        &quot;Justicia adscendens&quot;        
+## [41] &quot;Chrysocephalum apiculatum&quot;   &quot;Eucalyptus camaldulensis&quot;   
+## [43] &quot;Eucalyptus viridis&quot;          &quot;Acacia boormanii&quot;           
+## [45] &quot;Alphitonia excelsa&quot;          &quot;Evolvulus alsinoides&quot;       
+## [47] &quot;Kunzea ambigua&quot;              &quot;Lepidosperma laterale&quot;      
+## [49] &quot;Melaleuca parvistaminea&quot;     &quot;Pycnosorus globosus&quot;        
+## [51] &quot;Acacia howittii&quot;             &quot;Diplachne fusca&quot;            
+## [53] &quot;Leptospermum polygalifolium&quot; &quot;Cyanthillium cinereum&quot;      
+## [55] &quot;Allocasuarina littoralis&quot;    &quot;Aristida holathera&quot;         
+## [57] &quot;Tribulus terrestris&quot;         &quot;Melaleuca viridiflora&quot;      
+## [59] &quot;Utricularia dichotoma&quot;       &quot;Bulbostylis barbata&quot;        
+## [61] &quot;Phyllanthus virgatus&quot;        &quot;Atriplex suberecta&quot;         
+## [63] &quot;Microtis unifolia&quot;</code></pre>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 
 </div>
             </section>
