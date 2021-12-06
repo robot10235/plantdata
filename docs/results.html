@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Results | Popular Plants Used for Research Changes in Australia in 50 Years</title>
-  <meta name="description" content="Chapter 5 Results | Popular Plants Used for Research Changes in Australia in 50 Years" />
+  <title>Chapter 5 Results | Popular Plants in Australia in 50 Years</title>
+  <meta name="description" content="Chapter 5 Results | Popular Plants in Australia in 50 Years" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Results | Popular Plants Used for Research Changes in Australia in 50 Years" />
+  <meta property="og:title" content="Chapter 5 Results | Popular Plants in Australia in 50 Years" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Results | Popular Plants Used for Research Changes in Australia in 50 Years" />
+  <meta name="twitter:title" content="Chapter 5 Results | Popular Plants in Australia in 50 Years" />
   
   
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Group 86: Yuning Ding and Yan Gong" />
 
 
-<meta name="date" content="2021-12-05" />
+<meta name="date" content="2021-12-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -95,7 +95,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Popular Plants Used for Research Changes in Australia in 50 Years</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Popular Plants in Australia in 50 Years</a>
           </h1>
         </div>
 
@@ -107,11 +107,11 @@
 <h1><span class="header-section-number">Chapter 5</span> Results</h1>
 <div id="the-correlation-between-latitude-and-year." class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> The correlation between latitude and year.</h2>
-<p>In order to find out the correlation between latitude and year, we need to purge some data whose latitude and year may not be relative. For instance, this is one of species called Utricularia dichotoma, the scatter plot of its latitude and year seems messy. It is hard to describe the correlation between them. The reason why it happens is probably wrong records or the characteristic of plants. For example, Utricularia dichotoma usually grows in wet locations and the moisture must be more important than temperature to the living of the species causing the mess of the scatter plot.</p>
-<pre><code>##        rho 
-## -0.2643478</code></pre>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
-<p>We calculate the correlation coefficient of latitude and year of each species, and choose its absolute value which is not less than 0.3. There are 19 species met the condition. Here are the species, correlation coefficient and slope.</p>
+<p>In order to find out the correlation between latitude and year, we need to purge some data whose latitude and year may not be relative. For instance, this is one of species called Utricularia dichotoma, the correlation coefficient between latitude and year is very small.</p>
+<pre><code>## [1] -0.2643478</code></pre>
+<p>The scatter plot of its latitude and year seems messy. It is hard to describe the correlation between them. The reason why it happens is probably wrong records or the characteristic of plants. Utricularia dichotoma usually grows in wet locations and the moisture must be more important than temperature to the living of the species causing the mess of the scatter plot. Therefore, if the correlation coefficient is smaller than 0.3, we think no correlation exists.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>We calculate the correlation coefficient of latitude and year of each species, and choose its absolute value which is not less than 0.3. There are 19 species met the condition. Here are the species, correlation coefficients and slopes.</p>
 <pre><code>##                     species       corr       slope
 ## 1          Dodonaea viscosa -0.6164304 -0.11727618
 ## 2       Senna artemisioides  0.4211296  0.05817406
@@ -133,19 +133,21 @@
 ## 18        Acacia pravissima -0.4170265 -0.01556202
 ## 19      Dodonaea procumbens -0.3396470 -0.01255465</code></pre>
 <p>Observing the table, we can find that there are 3 species have positive correlation coefficients and 16 species have negative ones. It is worth noting that all latitudes are smaller than 0 since Australia is located in the southern hemisphere. Therefore, the negative correlation means the latitude gets higher as years pass. We show the correlation between latitude and years among 63 species as follows. The result is that about 70% of the species have no correlation between latitude and year. Nearly 24% of the species have negative correlations and 6% of the species have positive ones.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
-<p>We are also interested in different correlations in different classes: Liliopsida and Magnoliopsida. We can see that the latitudes of Magnoliosida plants are more likely get higher. And Liliopsida plants do not have any correlation between latitudes and years.
-<img src="finalproj_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>We are also interested in different correlations in different class: Liliopsida and Magnoliopsida. We can see that the latitudes of Magnoliosida plants are more likely get higher. And Liliopsida plants do not have any correlation between latitudes and years.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 </div>
 <div id="the-correlation-between-elevation-and-year." class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> The correlation between elevation and year.</h2>
-<p>We do the same thing to analyze the correlation between elevation and year. The result is that about 62% of the species have no correlation. Around 25% of the species have positive correlations and 12.7% of the species have negative ones.
-<img src="finalproj_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
-<p>Different correlations in different classes are also presented as follows. The elevations of Liliopsida plants are more likely get higher as years pass. The Magnoliopsida are less likely to have such coorelations.
-<img src="finalproj_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
-<p>Result:
-1.
-2.</p>
+<p>We do the same thing to analyze the correlation between elevation and year. The result is that about 62% of the species have no correlation. Around 25% of the species have positive correlations and 12.7% of the species have negative ones.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>Different correlations in different class are also presented as follows. The elevations of Liliopsida plants are more likely get higher as years pass. The Magnoliopsida are less likely to have such coorelations.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p>Result:</p>
+<ol style="list-style-type: decimal">
+<li><p>The latitude of occurrences of Australia Magnoliopsida plants in the last 50 years has a tendency to become higher.</p></li>
+<li><p>The elevation of occurrences of Australia Liliopsida plants in the last 50 years has a tendency to become higher.</p></li>
+</ol>
 
 </div>
 </div>
