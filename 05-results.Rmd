@@ -80,6 +80,21 @@ ggplot(pie, aes(x = "", y = count, fill = relation)) +
   labs(x = "", y = "") +
   scale_fill_discrete(breaks = pie$relation, labels = mylabel)
 ```
+We are interested in whether the changes of latitude are significant. The null hypothesis is that the correlation subjects to the normal distribution. Q-Q plot, density curve and Shapiro Wilk test result are presented. We can find that since p-value is very large, it does subject to the normal distribution, which means that the changes of latitude are minor. But we still find that the density curve leans to left a little bit, which means the latitude has a tendency to get higher.
+
+```{r}
+qqnorm(all_la_y_corr$corr)
+qqline(all_la_y_corr$corr, col = "red")
+
+ggplot(all_la_y_corr, aes(corr)) +
+  geom_histogram(aes(y = ..density..),
+                 fill = "lightblue",
+                 color = "black",
+                 bins = 15) +
+  geom_density(lwd=0.5) +
+  stat_function(fun = dnorm, args = list(mean = mean(all_la_y_corr$corr), sd = sd(all_la_y_corr$corr)), color = "red", lwd = 1.5)
+shapiro.test(all_la_y_corr$corr)
+```
 
 We are also interested in different correlations in different class: Liliopsida and Magnoliopsida. We can see that the latitudes of Magnoliosida plants are more likely get higher. And Liliopsida plants do not have any correlation between latitudes and years.
 
@@ -144,6 +159,22 @@ ggplot(pie, aes(x = "", y = count, fill = relation)) +
   scale_fill_discrete(breaks = pie$relation, labels = mylabel)
 ```
 
+We also present the Q-Q plot, density curve and Shapiro Wilk test result to show whether the correlation subject to normal distribution. At 10 percent level of significance, we can reject the null hypothesis. It means that the elevation does change in the last 50 years. We can notice that the density curve leans to left, which means that the elevation has a tendency to get higher.
+
+```{r}
+qqnorm(all_ele_y_corr$corr)
+qqline(all_ele_y_corr$corr, col = "red")
+
+ggplot(all_ele_y_corr, aes(corr)) +
+  geom_histogram(aes(y = ..density..),
+                 fill = "lightblue",
+                 color = "black",
+                 bins = 20) +
+  geom_density(lwd=0.5) +
+  stat_function(fun = dnorm, args = list(mean = mean(all_ele_y_corr$corr), sd = sd(all_ele_y_corr$corr)), color = "red", lwd = 1.5)
+shapiro.test(all_ele_y_corr$corr)
+```
+
 Different correlations in different class are also presented as follows. The elevations of Liliopsida plants are more likely get higher as years pass. The Magnoliopsida are less likely to have such coorelations.
 
 ```{r}
@@ -160,6 +191,6 @@ ggplot(test2, aes(corr, reorder(class, -corr, median))) +
 
 Result:
 
-1. The latitude of occurrences of Australia Magnoliopsida plants in the last 50 years has a tendency to become higher.
+1. The latitude of occurrences of Australia Magnoliopsida plants in the last 50 years has a tendency to get higher, but the changes are minor.
 
-2. The elevation of occurrences of Australia Liliopsida plants in the last 50 years has a tendency to become higher.
+2. The elevation of occurrences of Australia Liliopsida plants in the last 50 years has a tendency to become higher and the changes are significant to some extent.
