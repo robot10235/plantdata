@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <script src="https://d3js.org/d3.v5.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+      svg {
+        margin-left: 20px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+        d3.csv("C:/Users/28562/Desktop/d3", data2 => {
+            console.log(data2)
+        });
+      const data = [
+        { year: "1991", value: 3 },
+        { year: "1992", value: 4 },
+        { year: "1993", value: 3.5 },
+        { year: "1994", value: 5 },
+        { year: "1995", value: 4.9 },
+        { year: "1996", value: 6 },
+        { year: "1997", value: 7 },
+        { year: "1998", value: 9 },
+        { year: "1999", value: 13 }
+      ];
+      const width = 600;
+      const height = 400;
+
+      const svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+      // 这里代码没用 只是为了显示外框
+      svg
+        .append("rect")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("fill", "#fff")
+        .attr("stroke", "red");
+
+      // 创建一个g 当后面元素的group容器，移到（100，30）的位置
+      const m = { top: 30, right: 30, bottom: 30, left: 30 };
+      const g = svg.append("g").attr("transform", "translate(30, 30)");
+      // 实际我们图的高度宽度
+      const gW = width - m.left;
+      const gH = height - m.top - m.bottom;
+
+      // 定义x坐标轴的比例尺，gW为x轴的宽度
+      const xScale = d3.scaleBand().range([0, gW]);
+
+      // 定义好x轴d定义域，画出x轴axisBottom，底部
+      xScale.domain(data.map(item => item.year));
+
+      g.append("g")
+        .attr("transform", `translate(0, ${gH})`)
+        .call(d3.axisBottom(xScale))
+        .attr("stroke", "red");
+
+      // 定义y坐标轴的比例尺，gH为y轴的宽度
+      const yScale = d3.scaleLinear().range([gH, 0]);
+      // 定义好y轴d定义域，画出y轴，y轴画在左边axisLeft
+      yScale.domain([0, d3.max(data, item => item.value)]);
+      g.append("g")
+        .call(d3.axisLeft(yScale))
+        .attr("stroke", "red");
+
+      // 先给点画上小圆圈和文字，创建一个文字和圆圈的group
+      // join那句可以改为以前v4写法.enter().append('circle')
+      const group1 = g
+        .selectAll(".gruop-circle-text")
+        .data(data)
+        .join("g")
+        .attr("class", "gruop-circle-text");
+
+      group1
+        .selectAll("circle")
+        .data(data)
+        .join("circle")
+        .attr("cx", d => {
+          return xScale(d.year) + xScale.bandwidth() / 2;
+        })
+        .attr("cy", d => {
+          return yScale(d.value);
+        })
+        .attr("r", 3)
+        .attr("fill", "red");
+
+      group1
+        .selectAll("text")
+        .data(data)
+        .join("text")
+        .attr("x", d => {
+          return xScale(d.year) + xScale.bandwidth() / 2;
+        })
+        .attr("y", d => yScale(d.value) - 2)
+        .text(d => d.value);
+      // 创建一个line的生成器 用d3.line,把所有点连起来
+      const line = d3
+        .line()
+        .x(d => {
+          // 这里是d3.scaleBand自带比例尺
+          return xScale(d.year) + xScale.bandwidth() / 2;
+        })
+        .y(d => {
+          return yScale(d.value);
+        })
+        .curve(d3.curveCatmullRom);
+
+      g.append("path")
+        .attr("d", line(data))
+        .attr("fill", "none")
+        .attr("stroke", "purple");
+    </script>
+  </body>
+</html>
