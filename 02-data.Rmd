@@ -4,94 +4,119 @@ Since GBIF provides some simple selection to purge data, the data we chose which
 
 Some columns descriptions are shown as follows.
 
-datasetKey	
+**datasetKey**
+
 The occurrence dataset key (a uuid)
 
-occurrenceID
+**occurrenceID**
+
 A unique identifier for the occurrence, allowing the same occurrence to be recognized across dataset versions as well as through data downloads and use (see Darwin Core Terms: A quick reference guide)
 Ideally, the occurrenceID is a persistent global unique identifier. As a minimum requirement, it has to be unique within the published dataset. It allows to recognize the same occurrence over time when the dataset indexing is refreshed; it links additional data like images; and it makes it possible to cite records e.g. in usage reports or in publications. This means that the occurrenceID needs to reliably stay with the occurrence at source, and to consistently refer to the same occurrence in published datasets and any underlying source data.
 
-taxonRank
+**taxonRank**
+
 The taxon rank supports the interpretation of the scientific name during indexing, and supports matching the occurrence record to the core taxonomy, especially in the case of names at genus level or above (monomials). While the format of higher taxon names in some groups contains indicators of their rank, this is not consistent across or even within groups, and cannot be reliably used for interpretation. For placing names correctly, explicitly specifying the taxon rank, alongside information on the higher taxonomy, is an important criterion. For practical purposes, the ranks used have to be (major) Linnean ranks: kingdom, phylum, class, order, family, genus, species. Both Latin or English terms are accepted.
 
-scientificName	
+**scientificName**
+
 A scientific name from the GBIF backbone. All included and synonym taxa are included in the search.
 
-countryCode	
+**countryCode**
+
 The 2-letter country code (as per ISO-3166-1) of the country in which the occurrence was recorded. See here https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
-locality	
+**locality**
+
 (character) The specific description of the place.
 
-stateProvince	
+**stateProvince**
+
 (character) The name of the next smaller administrative region than country (state, province, canton, department, region, etc.) in which the Location occurs.
 
-occurrenceStatus	
+**occurrenceStatus**
+
 Type status of the specimen.
 
-publishingOrgKey	
+**publishingOrgKey**
+
 (character) The publishing organization key (a UUID).
 
-decimalLatitude	
+**decimalLatitude**
+
 Latitude in decimals between -90 and 90 based on WGS 84. Supports range queries, smaller,larger (e.g., '25,30', whereas '30,25' wouldn't work)
 
-decimalLongitude	
+**decimalLongitude**
+
 Longitude in decimals between -180 and 180 based on WGS 84. Supports range queries (e.g., '-0.4,-0.2', whereas '-0.2,-0.4' wouldn't work).
 
-elevation	
+**elevation**
+
 Elevation in meters above sea level. Supports range queries, smaller,larger (e.g., '5,30', whereas '30,5' wouldn't work)
 
-depth	
+**depth**
+
 Depth in meters relative to elevation. For example 10 meters below a lake surface with given elevation. Supports range queries, smaller,larger (e.g., '5,30', whereas '30,5' wouldn't work)
 
-eventDate	
+**eventDate**
+
 Occurrence date in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd. Supports range queries, smaller,larger (e.g., '1990,1991', whereas '1991,1990' wouldn't work)
 
-month	
+**month**
+
 The month of the year, starting with 1 for January. Supports range queries, smaller,larger (e.g., '1,2', whereas '2,1' wouldn't work)
 
-year	
+**year**
+
 The 4 digit year. A year of 98 will be interpreted as AD 98. Supports range queries, smaller,larger (e.g., '1990,1991', whereas '1991,1990' wouldn't work)
 
-taxonKey	
+**taxonKey**
+
 (numeric) A taxon key from the GBIF backbone. All included and synonym taxa are included in the search, so a search for aves with taxononKey=212 (i.e. /occurrence/search?taxonKey=212) will match all birds, no matter which species. You can pass many keys by passing occ_search in a call to an lapply-family function.
 
-basisOfRecord	
+**basisOfRecord**
+
 Basis of record, as defined in our BasisOfRecord enum here https://gbif.github.io/gbif-api/apidocs/org/gbif/api/vocabulary/BasisOfRecord.html Acceptable values are:
 
-FOSSIL_SPECIMEN An occurrence record describing a fossilized specimen.
+> FOSSIL_SPECIMEN An occurrence record describing a fossilized specimen.
 
-HUMAN_OBSERVATION An occurrence record describing an observation made by one or more people.
+> HUMAN_OBSERVATION An occurrence record describing an observation made by one or more people.
 
-LITERATURE An occurrence record based on literature alone.
+> LITERATURE An occurrence record based on literature alone.
 
-LIVING_SPECIMEN An occurrence record describing a living specimen, e.g.
+> LIVING_SPECIMEN An occurrence record describing a living specimen, e.g.
 
-MACHINE_OBSERVATION An occurrence record describing an observation made by a machine.
+> MACHINE_OBSERVATION An occurrence record describing an observation made by a machine.
 
-OBSERVATION An occurrence record describing an observation.
+> OBSERVATION An occurrence record describing an observation.
 
-PRESERVED_SPECIMEN An occurrence record describing a preserved specimen.
+> PRESERVED_SPECIMEN An occurrence record describing a preserved specimen.
 
-UNKNOWN Unknown basis for the record.
+> UNKNOWN Unknown basis for the record.
 
-institutionCode	
+**institutionCode**
+
 An identifier of any form assigned by the source to identify the institution the record belongs to. Not guaranteed to be que.
 
-collectionCode	
+**collectionCode**
+
 An identifier of any form assigned by the source to identify the physical collection or digital dataset uniquely within the text of an institution.
 
-license	
+**license**
+
 (character) The type license applied to the dataset or record. Possible values: CC0_1_0, CC_BY_4_0, CC_BY_NC_4_0, UNSPECIFIED, and UNSUPPORTED
 
-recordedBy	
+**recordedBy**
+
 The person who recorded the occurrence.
 
-lastInterpreted	
+**lastInterpreted**
+
 Date the record was last modified in GBIF, in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd. Supports range queries, smaller,larger (e.g., '1990,1991', whereas '1991,1990' wouldn't work)
 
-mediaType	
+**mediaType**
+
 Media type. Default is NULL, so no filtering on mediatype. Options: NULL, 'MovingImage', 'Sound', and 'StillImage'.
 
-issue	
+**issue**
+
 (character) One or more of many possible issues with each occurrence record. See Details. Issues passed to this parameter filter results by the issue.

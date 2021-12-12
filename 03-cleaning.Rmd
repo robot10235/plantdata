@@ -52,8 +52,17 @@ new_species <- subset(species, species %in% cnt$species)
 
 Finally, we get 64 species to investigate. Most of them are in Magnoliopsida class.
 
+```{r fig.width=5, fig.height=10}
+ggplot(cnt, aes(x= fct_reorder(species, count), y = count)) +
+  coord_flip() +
+  geom_point(color = "blue") +
+  ggtitle("64 most popular species") +
+  ylab("Count") +
+  xlab("Species") +
+  theme_linedraw()
+```
+
 ```{r}
-cnt$species
 write.table(new_species,"species.csv", row.names = FALSE, col.names = TRUE, sep = ",")
 group <- unique(subset(data, species %in% cnt$species, select = c(phylum, class, order, family, genus, species)))
 pie <- group %>%

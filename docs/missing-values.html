@@ -106,7 +106,7 @@
 <div id="missing-values" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
 <p>Visualize the missing pattern of the data which we have purged before.
-<img src="finalproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<img src="finalproj_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>Observing the plot, we can easily find out some correlations among some factors. LA means latitude and LO means longitude, so if one of them is missing, the other one must be missing too. The plot reveals this correlation. The similar correlation also appears between DP(depth) and DPA(depth accuracy), and EA(elevation accuracy) and ELE(elevation). Another correlation is between Y(year) and M(month). Year is more easily be recorded than month.</p>
 <p>DP, DPA, COPRE(coordinate precision), CNT are more likely to be missing. We might use elevation to conduct some results since nearly half of them are not missing. COUN(coordinate uncertainty in meter) has no missing because we first downloaded data with limitation of COUN smaller than 10000. And SP(species), SK(species key) has no missing data because at chapter 3 we purge all missing species key data. ST(state), Y has no missing at all. ST(state) and Y(year) is much easier to record.</p>
 <p>Although LA, LO and M have some missing values, these cases are actually very small. We can notice the top graph that it is not very obvious to show that these columns have missing values. As for the right graph, we can find that the missing pattern that these columns have are smallest subset in the whole data. Therefore, we can think these columns have no missing values.</p>
