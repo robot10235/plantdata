@@ -1,11 +1,18 @@
 # Data sources
 
-Since GBIF provides some simple selection to purge data. The data we chose which contains Australia native plants. It has restrictions that the coordinate uncertainty in metres must be smaller than 10000, in order to help us draw more accurate results.
+Since GBIF provides some simple selection to purge data, the data we chose which contains Australia native plants. It has restrictions that the coordinate uncertainty in metres must be smaller than 10000, in order to help us draw more accurate results.
 
-Some columns explanations as follows.
+Some columns descriptions are shown as follows.
 
 datasetKey	
 The occurrence dataset key (a uuid)
+
+occurrenceID
+A unique identifier for the occurrence, allowing the same occurrence to be recognized across dataset versions as well as through data downloads and use (see Darwin Core Terms: A quick reference guide)
+Ideally, the occurrenceID is a persistent global unique identifier. As a minimum requirement, it has to be unique within the published dataset. It allows to recognize the same occurrence over time when the dataset indexing is refreshed; it links additional data like images; and it makes it possible to cite records e.g. in usage reports or in publications. This means that the occurrenceID needs to reliably stay with the occurrence at source, and to consistently refer to the same occurrence in published datasets and any underlying source data.
+
+taxonRank
+The taxon rank supports the interpretation of the scientific name during indexing, and supports matching the occurrence record to the core taxonomy, especially in the case of names at genus level or above (monomials). While the format of higher taxon names in some groups contains indicators of their rank, this is not consistent across or even within groups, and cannot be reliably used for interpretation. For placing names correctly, explicitly specifying the taxon rank, alongside information on the higher taxonomy, is an important criterion. For practical purposes, the ranks used have to be (major) Linnean ranks: kingdom, phylum, class, order, family, genus, species. Both Latin or English terms are accepted.
 
 scientificName	
 A scientific name from the GBIF backbone. All included and synonym taxa are included in the search.

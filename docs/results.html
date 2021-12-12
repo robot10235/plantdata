@@ -24,7 +24,7 @@
 <meta name="author" content="Group 86: Yuning Ding and Yan Gong" />
 
 
-<meta name="date" content="2021-12-07" />
+<meta name="date" content="2021-12-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -132,35 +132,35 @@
 ## 17      Acacia provincialis -0.4431635 -0.01237274
 ## 18        Acacia pravissima -0.4170265 -0.01556202
 ## 19      Dodonaea procumbens -0.3396470 -0.01255465</code></pre>
-<p>Observing the table, we can find that there are 3 species have positive correlation coefficients and 16 species have negative ones. It is worth noting that all latitudes are smaller than 0 since Australia is located in the southern hemisphere. Therefore, the negative correlation means the latitude gets higher as years pass. We show the correlation between latitude and years among 63 species as follows. The result is that about 70% of the species have no correlation between latitude and year. Nearly 24% of the species have negative correlations and 6% of the species have positive ones.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-24-1.png" width="672" />
-We are interested in whether the changes of latitude are significant. The null hypothesis is that the correlation subjects to the normal distribution. Q-Q plot, density curve and Shapiro Wilk test result are presented. We can find that since p-value is very large, it does subject to the normal distribution, which means that the changes of latitude are minor. But we still find that the density curve leans to left a little bit, which means the latitude has a tendency to get higher.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-25-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
+<p>Observing the table, we can find that there are 3 species have positive correlation coefficients and 16 species have negative ones. It is worth noting that all latitudes are smaller than 0 since Australia is located in the southern hemisphere. Therefore, the negative correlation means the latitude gets higher as years pass. We show the correlation between latitude and years among 63 species as follows. The result is that about 70% of the species have no correlation between latitude and year. Nearly 25% of the species have negative correlations and 5% of the species have positive ones.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>We are interested in whether the changes of latitude are significant. The null hypothesis is that the correlation subjects to the normal distribution, which means that the change of is normal. Q-Q plot, density curve and Shapiro Wilk test result are presented. We can find that since p-value is very large, it does subject to the normal distribution, which means that the change of latitude is normal. But we still find that the density curve leans to left a little bit, which means the latitude has a tendency to get higher.</p>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  all_la_y_corr$corr
 ## W = 0.97777, p-value = 0.3107</code></pre>
-<p>We are also interested in different correlations in different class: Liliopsida and Magnoliopsida. We can see that the latitudes of Magnoliosida plants are more likely get higher. And Liliopsida plants do not have any correlation between latitudes and years.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-25-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
+<p>We are also interested in different correlations in different class: Liliopsida and Magnoliopsida. We can see that the latitudes of Magnoliosida plants are more likely get higher, but the correlation is not significant. And Liliopsida plants do not have any correlation between latitudes and years.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 </div>
 <div id="the-correlation-between-elevation-and-year." class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> The correlation between elevation and year.</h2>
-<p>We do the same thing to analyze the correlation between elevation and year. The result is that about 62% of the species have no correlation. Around 25% of the species have positive correlations and 12.7% of the species have negative ones.</p>
+<p>We do the same thing to analyze the correlation between elevation and year. The result is that about 62% of the species have no correlation. Around 25% of the species have positive correlations and 13% of the species have negative ones.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
-<p>We also present the Q-Q plot, density curve and Shapiro Wilk test result to show whether the correlation subject to normal distribution. At 10 percent level of significance, we can reject the null hypothesis. It means that the elevation does change in the last 50 years. We can notice that the density curve leans to left, which means that the elevation has a tendency to get higher.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-28-2.png" width="672" /></p>
+<p>We also present the Q-Q plot, density curve and Shapiro Wilk test result to show whether the correlation subject to normal distribution. At 10 percent level of significance, we can reject the null hypothesis. It means that the change of elevation is not normal in the last 50 years. We can notice that the density curve leans to left, which means that the elevation has a tendency to get higher.</p>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  all_ele_y_corr$corr
 ## W = 0.9655, p-value = 0.07442</code></pre>
-<p>Different correlations in different class are also presented as follows. The elevations of Liliopsida plants are more likely get higher as years pass. The Magnoliopsida are less likely to have such coorelations.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-28-2.png" width="672" /></p>
+<p>Different correlations in different class are also presented as follows. The elevations of Liliopsida plants are more likely get higher as years pass, but the correlation is not significant. It seems the Magnoliopsida do not have such correlation.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>Result:</p>
 <ol style="list-style-type: decimal">
-<li><p>The latitude of occurrences of Australia Magnoliopsida plants in the last 50 years has a tendency to get higher, but the changes are minor.</p></li>
-<li><p>The elevation of occurrences of Australia Liliopsida plants in the last 50 years has a tendency to become higher and the changes are significant to some extent.</p></li>
+<li><p>The latitude of occurrences of Australia plants in the last 50 years has a tendency to get higher, but the change is minor.</p></li>
+<li><p>The elevation of occurrences of Australia plants in the last 50 years has a tendency to get higher and the change is significant to some extent.</p></li>
 </ol>
 
 </div>

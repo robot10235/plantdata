@@ -39,7 +39,7 @@ species <- species[c(10, 18, 20, 22, 23, 24, 25, 26, 27, 28, 29, 32, 33, 35)]
 colnames(species)
 ```
 
-We also notice that some species only appear several times. We choose to drop species appearing less than 300 records which represent that they are popular in the research.
+We also notice that some species only appear several times. We choose to drop species appearing less than 300 records which represent that they are not popular in the research.
 
 ```{r}
 cnt <- species %>%
