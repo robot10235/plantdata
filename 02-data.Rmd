@@ -1,6 +1,6 @@
 # Data sources
 
-Since GBIF provides some simple selection to purge data, the data we chose which contains Australia native plants. It has restrictions that the coordinate uncertainty in metres must be smaller than 10000, in order to help us draw more accurate results.
+In biogeography, a native species is indigenous to a given region or ecosystem if its presence in that region is the result of only local natural evolution (though often popularised as "with no human intervention". It is an antonym of invasive plants. The reason why we analyze occurrences of native plants not invasive plants is that the living area of invasive plants is very unstable compared to natural plants. Since GBIF provides some simple selections to purge data, the data we chose which contains Australia native plants. It has restrictions that the coordinate uncertainty in metres must be smaller than 10000, in order to help us draw more accurate results.
 
 Some columns descriptions are shown as follows.
 

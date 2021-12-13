@@ -1,5 +1,5 @@
 --- 
-title: "Popular Plants in Australia in 50 Years"
+title: "Popular Native Plants in Australia in 50 Years"
 author: "Group 86: Yuning Ding and Yan Gong"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -7,7 +7,7 @@ site: bookdown::bookdown_site
 
 # Introduction
 
-Global warming has been one of the hottest topic for many years. When we talk about global warming, we will imagine the glacier melts in the polar region and high mountains, sea level rises making some islands sink, and summer becomes hotter than past years. Global warming not only changes human life, but also impacts all living things around the world. For example, the area of occurrences of plants may change since plants may live in higher latitude or higher elevation area as years pass because of rise of average temperature caused by global warming. In order to find out these changes, the data of all native plants in Australia should be needed. However, we can not collect complete data due to the limited conditions. We choose the data which is used for research to draw the conclusions. The results we are going to show can not represent for all plant species in Australia, but it does show some changes happen to the plants somehow. 
+Global warming has been one of the hottest topic for many years. When we talk about global warming, we will imagine the glacier melts in the polar region and high mountains, sea level rises making some islands sink, and summer becomes hotter than past years. Global warming not only changes human life, but also impacts all living things around the world. For example, the area of occurrences of plants may change since plants may live in higher latitude or higher elevation area as years pass because of rise of average temperature caused by global warming. In order to find out these changes, the data of all native plants in Australia should be needed. However, we can not collect complete data due to the limited conditions. We choose the data which is used for research to draw the conclusions. The results we are going to show can not represent for all native plant species in Australia, but it does show some changes happen to the plants somehow. 
 
 In this project, we analyze the occurrences of plants with lots of records with restrictions of coordinate uncertainty in metres in Australia in GBIF(Global Biodiversity Information Facility). The download link is: https://doi.org/10.15468/dl.knbx8a. We would like to carry out analysis from both geographic and time analysis perspectives and answer the following questions:
 
