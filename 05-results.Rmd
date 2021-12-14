@@ -192,6 +192,6 @@ ggplot(test2, aes(corr, reorder(class, -corr, median))) +
 
 Result:
 
-1. The latitude of occurrences of Australia plants in the last 50 years has a tendency to get higher, but the change is minor.
+1. The latitude of occurrences of Australia native plants in the last 50 years has a tendency to get higher, but the change is minor.
 
-2. The elevation of occurrences of Australia plants in the last 50 years has a tendency to get higher and the change is significant to some extent.
+2. The elevation of occurrences of Australia native plants in the last 50 years has a tendency to get higher and the change is significant to some extent.
