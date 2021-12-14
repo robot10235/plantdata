@@ -141,7 +141,7 @@ d3.json("aus_state.geojson").then(function(data) {
 
 
 // load and display plant distribution
-d3.csv("/auplant_1972.csv").then(function(data) {
+d3.csv("auplant_1972.csv").then(function(data) {
 
     console.log(data);
     gPin.selectAll("circle")
